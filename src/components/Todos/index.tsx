@@ -1,20 +1,28 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { GetTodosList } from '../../saga/sagas';
+import { getTodos } from '../../actions';
 import Todos from './component';
 
 
 interface ITodosProps {
-  GetTodosList: () => void;
+  getTodos: () => void;
 }
 
 interface ITodosState {
   todos: any;
 }
+/*
+const mapDispatchToProps = () => {
+  getTodos
+}
+*/
+const masStateToProps = ({state} :any) => {
+  todos: state.todo.data
+}
 
 export default connect(
-  null,
-  { GetTodosList }
+  masStateToProps,
+  { getTodos }
 )(
   class extends React.Component<ITodosProps, ITodosState> {
     constructor(props: ITodosProps){
@@ -23,11 +31,11 @@ export default connect(
         todos: []
       }
     }
-    public componentWillMount() {
-      this.props.GetTodosList();
-    }
-    public render() {
-      return <Todos param="value" todos={this.state.todos} />;
+    render() {
+      return <Todos 
+        todos={this.state.todos}
+        loadTodos={this.props.getTodos} 
+      />;
     }
   }
 );

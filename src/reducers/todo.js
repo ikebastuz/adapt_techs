@@ -1,16 +1,19 @@
-const TODOS_LOADED = "TODOS_LOADED";
+import { GET_TODOS, RECIEVED_TODOS } from '../actions'
 
 const initialState = {
-  data: []
+  data: [],
+  loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case "TODOS_LOADED":
+    case GET_TODOS:
       return {
         ...state,
-        data: action.payload
+        loading: true
       };
+    case RECIEVED_TODOS:
+      return { ...state, data: action.payload, loading: false }
     default:
       return state;
   }

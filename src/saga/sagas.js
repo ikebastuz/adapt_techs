@@ -1,13 +1,20 @@
-import { put } from "redux-saga/effects";
+import { put, takeEvery, all } from "redux-saga/effects";
+import { GET_TODOS, RECIEVED_TODOS } from '../actions'
 
-export const GetTodosList = () => {
-  fetch('https://jsonplaceholder.typicode.com/todos')
-    .then(response => response.json())
-    .then(function*(json){
-      yield put({
-        payload: json,
-        type: 'TODOS_LOADED'
-      })
-    })
-    .catch(err => new Error(err))
+function* GetTodosList(){
+  const json = yield fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(res => res.json())
+
+  console.log(json);
+  yield put({ type: RECIEVED_TODOS, payload: json });
+}
+
+function* actionWatcher() {
+  yield takeEvery(GET_TODOS, GetTodosList)
+}
+
+export default function* rootSaga(){
+  yield all([
+    actionWatcher()
+  ]);
 }
