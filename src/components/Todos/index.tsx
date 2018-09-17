@@ -5,7 +5,8 @@ import Todos from './component';
 
 
 interface ITodosProps {
-  getTodos: () => void;
+  getTodos: () => void,
+  todos: any
 }
 
 interface ITodosState {
@@ -13,11 +14,11 @@ interface ITodosState {
 }
 /*
 const mapDispatchToProps = () => {
-  getTodos
+  return { getTodos }
 }
 */
-const masStateToProps = ({state} :any) => {
-  todos: state.todo.data
+const masStateToProps = (state :any) => {
+  return {todos: state.todo.data}
 }
 
 export default connect(
@@ -29,6 +30,11 @@ export default connect(
       super(props);
       this.state = {
         todos: []
+      }
+    }
+    componentWillReceiveProps(nextProps:ITodosProps){
+      if(nextProps.todos){
+        this.setState({todos: nextProps.todos})
       }
     }
     render() {
