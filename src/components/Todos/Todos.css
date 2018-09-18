@@ -1,0 +1,10 @@
+.done{
+  color: green;
+  text-decoration: line-through;
+}
+.undone{
+  color: firebrick;
+}
+.todos-list p{
+  cursor: pointer;
+}

@@ -5,7 +5,6 @@ function* GetTodosList(){
   const json = yield fetch('https://jsonplaceholder.typicode.com/todos')
     .then(res => res.json())
 
-  console.log(json);
   yield put({ type: RECIEVED_TODOS, payload: json });
 }
 

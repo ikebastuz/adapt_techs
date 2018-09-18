@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { getTodos } from '../../actions';
 import Todos from './component';
 
+import {toggleTodo} from '../../api/Todos';
+
+import './Todos.css';
 
 interface ITodosProps {
   getTodos: () => void,
@@ -37,10 +40,15 @@ export default connect(
         this.setState({todos: nextProps.todos})
       }
     }
+    toggleDone = (id:number):void => {
+      const updatedTodos = toggleTodo(this.state.todos, id);
+      this.setState({todos: updatedTodos})
+    }
     render() {
       return <Todos 
         todos={this.state.todos}
         loadTodos={this.props.getTodos} 
+        toggleDone={this.toggleDone}
       />;
     }
   }

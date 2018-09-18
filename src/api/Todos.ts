@@ -1,17 +1,15 @@
-export const GetTodosList = () => {
-  return [{id:1, name: "one"}, {id:2, name: "two"}];
-  /*
-  dispatch({
-    payload: [{id:1, name: "one"}, {id:2, name: "two"}],
-    type: 'TODOS_LOADED'
-  })
-  */
-  /*
-  return new Promise((resolve, reject) => {
-    fetch('https://jsonplaceholder.typicode.com/todos')
-      .then(response => response.json())
-      .then(json => resolve(json))
-      .catch(err => reject(err))
-  })
-  */
+interface ITodo {
+  id: number;
+  completed: boolean;
+  title: string;
+  userId: number;
+}
+
+export const toggleTodo = (list:[ITodo], id:number) => {
+  return list.map(todo => {
+    if(todo.id === id){
+      todo.completed = !todo.completed
+    }
+    return todo;
+  });
 };
